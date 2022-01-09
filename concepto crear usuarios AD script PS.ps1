@@ -1,0 +1,2 @@
+﻿Import-Csv .\ListUsersAD.csv | foreach-object { 
+New-ADUser -SamAccountName $_.SamAccountName -UserPrincipalName $_.userPrincipalName -Name $_.name -DisplayName $_.name -GivenName $_.GivenName -SurName $_.SurName -Title $_.Title -Company $_.Company -Department $_.Department -EmailAddress $_.EmailAddress -Description $_.Description -Path "OU=Usuarios,OU=Contoso,DC=Contoso,DC=local" -AccountPassword (ConvertTo-SecureString "P@ssword" -AsPlainText -force) -Enabled $True -PasswordNeverExpires $False -ChangePasswordAtLogon $True -PassThru }
