@@ -1,5 +1,15 @@
-Title AnyDesk Deploy
 @echo off
-pushd c:\
-anydesk.exe --install  “C:\Program Files (x86)\AnyDesk” --start-with-win --create-desktop-icon
-echo Fly.4102 | anydesk.exe --set-password
+
+set /p ip=Ingrese una Ip?:
+net use \\%ip%\c$ /user:administrador 
+mkdir "\\%ip%\c$\Anydesk"
+echo Copiando Archivos
+robocopy "\\nb-cnd-it00\share\anydesk " "\\%ip%\c$\Anydesk " /E
+
+
+
+
+wmic /user:administrador /password: /node:%ip% process call create "cmd.exe /c start /WAIT C:\Anydesk\anydeskdeploy.bat"
+net use \\%ip%\c$ /d /y>nul 2>&1
+
+pause
